@@ -369,7 +369,9 @@ export class CanvasPointer {
       const absWheelDeltaY = Math.abs(wheelDeltaY)
 
       // get this wheelDelta from real word testing, in general, mouse wheelDelta is larger than 30 to 120, trackpad is about less than 25
-      if (absWheelDeltaY > 25) {
+      const wheelDeltaYThreshold = navigator.platform.includes('Mac') ? 35 : 75
+
+      if (absWheelDeltaY > wheelDeltaYThreshold) {
         if (this.#isTrackpadPattern(event)) {
           console.log(
             'Detected device: trackpad (wheelDelta check and isTrackpadPattern)'
@@ -430,7 +432,7 @@ export class CanvasPointer {
     if (
       !navigator.platform.includes('Mac') &&
       event.deltaX === 0 &&
-      Math.abs(event.deltaY) < 30
+      Math.abs(event.deltaY) < 70
     )
       return true
 
